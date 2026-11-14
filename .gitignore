@@ -7,3 +7,5 @@
 *.dylib
 *.dll
 .*/
+**/output/
+
