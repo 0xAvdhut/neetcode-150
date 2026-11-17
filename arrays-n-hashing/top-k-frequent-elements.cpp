@@ -5,6 +5,7 @@
 
 using namespace std;
 
+
 class Solution {
 public:
 
@@ -38,34 +39,39 @@ public:
     };
 
 
-    // IDEAL SOLLUTION 
+    /* 
+    IDEAL SOLLUTION 
 
+
+    MEMORY OPTIMISATION
+    HG: res.reserve(k) fixing the vector size 
+    */
     vector<int> IDEALtopKFrequent(vector<int>& nums, int k) {
-        unordered_map<int,int> mp;
-       
-        for(int i = 0; i < nums.size(); i++){
-           mp[nums[i]]++;
+        unordered_map<int,int> count;
+        vector<vector<int>> freq(nums.size() + 1);
+
+        for(int n : nums){
+            count[n]++;
         }
+        for(auto &it : count){
+            freq[it.second].push_back(it.first);
+        }
+        vector<int> res; 
 
-        vector<int> res = {};
+        
+       
+        // loop from highest freq till it res.size reaches k
 
-        for(int i = 0; i < k; i++){
-            //find max element of the map
-            int max = 0;
-            int max_el = 0;
-            for(auto it : mp){
-                
-                if(it.second > max){
-                    max = it.second;
-                    max_el = it.first;
+        for(int i = freq.size()- 1; i > 0; --i ){
+            for(int n : freq[i]){
+                res.push_back(n);
+                if(res.size() == k){
+                    return res;
                 }
-
-            }   
-            res.push_back(max_el);
-            mp.erase(max_el);
-            
+            }
         }
         return res;
+
     }
 };
 
